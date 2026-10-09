@@ -21,6 +21,9 @@ const students = [
     { name: "Tyler", age: 23, grade: "1", workexperience: 0 }
 ];
 
+//Utskrift antall studenter #studentCount
+document.getElementById("studentCount").innerHTML=students.length
+
 const grades = [
     { letter: "A", score: 6 },
     { letter: "B", score: 5 },
@@ -28,4 +31,77 @@ const grades = [
     { letter: "D", score: 3 },
     { letter: "E", score: 2 },
     { letter: "F", score: 1}
-]
+];
+
+//Gjennomsnittskarakter (som bokstavkarakter) og rundet opp. 
+
+const scores = students.map(student => Number(student.grade));
+const sum = scores.reduce ((acc, value) => acc + value, 0);
+const average = sum / scores.length; 
+const roundedAverage = Math.ceil(average);
+
+function numberToLetter(num){
+    if (num === 6) return "A";
+    if (num === 5) return "B";
+    if (num === 4) return "C";
+    if (num === 3) return "D";
+    if (num === 2) return "E";
+    if (num === 1) return "F";
+
+}
+
+const letterGrade = numberToLetter(roundedAverage);
+
+document.querySelector("#averageGrade").innerHTML = letterGrade; 
+
+//Opptelt og skrevet ut hver karakter
+const gradeCount = {
+    A: 0,
+    B: 0,
+    C: 0,
+    D: 0,
+    E: 0,
+    F: 0,
+};
+
+students.forEach(student => {
+    const gradeNumber = Number(student.grade);
+    if(gradeNumber === 6) gradeCount.A++;
+    if(gradeNumber === 5) gradeCount.B++;
+    if(gradeNumber === 4) gradeCount.C++;
+    if(gradeNumber === 3) gradeCount.D++;
+    if(gradeNumber === 2) gradeCount.E++;
+    if(gradeNumber === 1) gradeCount.F++;
+
+});
+
+document.querySelector("#gradeA").innerHTML = gradeCount.A;
+document.querySelector("#gradeB").innerHTML = gradeCount.B;
+document.querySelector("#gradeC").innerHTML = gradeCount.C;
+document.querySelector("#gradeD").innerHTML = gradeCount.D;
+document.querySelector("#gradeE").innerHTML = gradeCount.E;
+document.querySelector("#gradeF").innerHTML = gradeCount.F;
+
+//Regnet ut og skrevet ut gjennomsnittsalder - #averageAge
+const ages = students.map(student => student.age);
+const ageSum = ages.reduce((acc, value) => acc + value, 0);
+const averageAge = ageSum / ages.length; 
+const roundedAverageAge = averageAge.toFixed(2);
+
+document.querySelector("#averageAge").innerHTML = roundedAverageAge;
+
+
+//Opptelt og skrevet ut antall studenter rett fra VGS - #highSchool
+const highSchoolCount = students.filter(student => student.age === 19).length;
+
+document.querySelector("#highSchool").innerHTML = highSchoolCount;
+
+
+//Opptelt og skrevet ut antall studenter med yrkeserfaring - #workExperience
+const workExperienceCount = students.filter(student => student.workexperience >= 1).length;
+
+document.querySelector("#workExperience").innerHTML = workExperienceCount;
+
+
+
+
